@@ -13,6 +13,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # Импорт остального дерьма
-from . import views
+from . import views, models
 
 
