@@ -1,12 +1,12 @@
 from flask import Flask
-from config import DevelopmentConfig
+from config import DevelopmentConfig, ProductionConfig
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
 # Создание экземпляра приложения
 app = Flask(__name__)
-app.config.from_object(DevelopmentConfig)
+app.config.from_object(ProductionConfig)
 
 # Инициализация расширений
 db = SQLAlchemy(app)

@@ -15,7 +15,8 @@ $ docker-compose db up --build
 ```bash
 $ pip install -r requirements.txt
 ```
-После чего инициализировать базу и добавить соответствующие модели в базу
+После чего инициализировать базу и добавить 
+соответствующие модели в базу (ну и заполнить  .env)
 ```bash
 $ flask db init
 $ flask db migrate
