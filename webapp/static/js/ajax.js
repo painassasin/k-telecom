@@ -19,6 +19,7 @@ function sendAjaxForm(ajax_form){
             if (json.success == true) {
                 alert(json.msg)
                 form.trigger('reset');
+                $('#msg').html('');
             }
             else {
                 $('#msg').html(json.msg)

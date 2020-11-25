@@ -1,38 +1,29 @@
-from webapp import app, db
+from webapp.controllers import insert_equipments, insert_equipment_types
 from webapp.forms import EquipmentForm
 from flask import render_template
-from webapp.models import EquipmentTypes
-from sqlalchemy.exc import IntegrityError
+from webapp import app
+import json
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = EquipmentForm()
-    context = {
-        'title': 'K-Telecom',
-        'form_title': 'Форма добавления серийных номеров',
-        'form': form, }
 
     if form.validate_on_submit():
         type_code = form.equipment_type.data
         sn = form.serial_numbers.data
 
-        return ''
+        result, msg = insert_equipments(type_code, sn.split('\r\n'))
+        return json.dumps({'success': result, 'msg': msg})
 
-    return render_template('index.html', **context)
+    return render_template('index.html',
+                           title='K-Telecom',
+                           form_title='Форма добавления серийных номеров',
+                           form=form,)
 
 
 @app.route('/init')
 def init_db():
-    equipments = [
-        EquipmentTypes('TP-Link TL-WR74', 'XXAAAAAXAA'),
-        EquipmentTypes('D-Link DIR-300', 'NXXAAXZXaa'),
-        EquipmentTypes('D-Link DIR-300 S', 'NXXAAXZXXX'),
-    ]
-    try:
-        for e in equipments:
-            db.session.add(e)
-        db.session.commit()
-        return 'Done'
-    except IntegrityError as err:
-        return 'Записи уже добавлены'
+    return 'Ok' if insert_equipment_types() else 'Записи уже добавлены'
+
+
