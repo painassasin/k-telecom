@@ -14,5 +14,3 @@ migrate = Migrate(app, db)
 
 # Импорт остального дерьма
 from . import views, models
-
-
