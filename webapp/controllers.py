@@ -45,6 +45,9 @@ def validate_numbers(equipment_code: str, serial_numbers: list) -> tuple:
 
     # Проверка серийныйх номеров на валидность
     for sn in serial_numbers:
+        # Если есть пустые строки - игнороровать их
+        if not sn:
+            continue
         if not valid_serial_number(sn_mask, sn):
             msg = (f'Серийный номер <b>{sn}</b> '
                    f'не соответствует маске <b>{sn_mask}</b>')
