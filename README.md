@@ -7,7 +7,8 @@
 В противном случае приложение сообщит об ошибке.
 
 ## Запуск
-Первым делом нужно развернуть Docker
+Сначала нужно переименовать .env.example в .env и заполнить пустые значения и
+развернуть Docker
 ```bash
 $ docker-compose up --build -d
 ```
@@ -15,8 +16,7 @@ $ docker-compose up --build -d
 ```bash
 $ pip install -r requirements.txt
 ```
-Далее нужно переименовать .env.example в .env и заполнить пустые значения,
-после чего закинуть модели в базу
+Далее закинуть модели в базу
 ```bash
 $ python manage.py db init
 $ python manage.py db migrate
