@@ -15,7 +15,8 @@ $ docker-compose up --build -d
 ```bash
 $ pip install -r requirements.txt
 ```
-Далее нужно закинуть модели в базу
+Далее нужно переименовать .env.example в .env и заполнить пустые значения,
+после чего закинуть модели в базу
 ```bash
 $ python manage.py db init
 $ python manage.py db migrate
