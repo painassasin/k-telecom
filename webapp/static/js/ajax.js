@@ -15,15 +15,14 @@ function sendAjaxForm(ajax_form){
         url: form.attr('action'),
         data: form.serialize(),
         success: function(response) {
-            var json = $.parseJSON(response);
-            if (json.success == true) {
-                alert(json.msg)
+            if (response['success'] == true) {
+                alert(response['msg']);
                 form.trigger('reset');
                 $('#msg').html('');
             }
-            else {
-                $('#msg').html(json.msg)
-            }
+           else {
+                $('#msg').html(response['msg']);
+           }
         },
         error: function(error) {
             console.log(error);

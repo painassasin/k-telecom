@@ -10,7 +10,8 @@ class EquipmentForm(FlaskForm):
         label='Тип оборудования',
         validators=[DataRequired()],
         render_kw={'class': 'form-control'},
-        choices=[(t.code, t.type_name) for t in EquipmentTypes.query.all()])
+        choices=[(t.code, t.type_name) for t in EquipmentTypes.query.all()],
+    )
 
     serial_numbers = TextAreaField(
         label='Серийные номера',

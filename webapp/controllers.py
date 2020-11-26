@@ -4,17 +4,6 @@ from webapp import app, db
 import re
 
 
-def create_pattern(sn_mask: str) -> str:
-    """
-    Создает регулярное выражение для валидации номера по маске.
-    :param sn_mask:
-    :return:
-    """
-    re_dict = app.config['RE_DICT']
-    re_string = ''.join([re_dict[char] for char in sn_mask])
-    return f'^({re_string})$'
-
-
 def valid_serial_number(sn_mask: str, serial_number: str) -> bool:
     """
     Проверяет серийный номер на соответствие маске.
@@ -22,7 +11,9 @@ def valid_serial_number(sn_mask: str, serial_number: str) -> bool:
     :param serial_number:
     :return:
     """
-    pattern_string = create_pattern(sn_mask)
+    re_dict = app.config['RE_DICT']
+    re_string = ''.join([re_dict[char] for char in sn_mask])
+    pattern_string = f'^({re_string})$'
     pattern = re.compile(pattern_string)
     return bool(pattern.search(serial_number))
 
@@ -39,10 +30,20 @@ def validate_numbers(equipment_code: str, serial_numbers: list) -> tuple:
     :return:
     """
 
-    sn_mask = get_equipment_mask(equipment_code)
-    if not sn_mask:
+    # Получение маски серийного номера
+    sn_mask = ''
+    try:
+        mask = (
+            db.session.query(EquipmentTypes.sn_mask).
+            filter(EquipmentTypes.code == int(equipment_code)).first()
+        )
+        if mask:
+            sn_mask = mask[0]
+    except Exception as err:
+        print(f'{type(err)}\n{str(err)}')
         return False, 'Ошибка на сервере!'
 
+    # Проверка серийныйх номеров на валидность
     for sn in serial_numbers:
         if not valid_serial_number(sn_mask, sn):
             msg = (f'Серийный номер <b>{sn}</b> '
@@ -50,24 +51,6 @@ def validate_numbers(equipment_code: str, serial_numbers: list) -> tuple:
             return False, msg
 
     return True, ''
-
-
-def get_equipment_mask(type_code: str) -> str:
-    """
-    Получает по идентификатору типа оборудования маску его серийного номера.
-    В случае ошибок возвращает пустую строку.
-    :param type_code:
-    :return:
-    """
-    try:
-        sn_mask = db.session.\
-            query(EquipmentTypes.sn_mask).\
-            filter(EquipmentTypes.code == int(type_code)).first()
-        if sn_mask:
-            return sn_mask[0]
-    except Exception as err:
-        print(f'{type(err)}\n{str(err)}')
-    return ''
 
 
 def insert_equipments(type_code: str, sns: list) -> tuple:
@@ -90,7 +73,8 @@ def insert_equipments(type_code: str, sns: list) -> tuple:
 
     # Если соответствует маске
     for serial_number in sns:
-        db.session.add(Equipments(type_code, serial_number))
+        e = Equipments(type_code=type_code, serial_number=serial_number)
+        db.session.add(e)
     try:
         db.session.commit()
     except IntegrityError as err:
@@ -101,22 +85,3 @@ def insert_equipments(type_code: str, sns: list) -> tuple:
         return False, 'Ошибка на сервере!'
 
     return True, 'Серийные номера успешно добавлены!'
-
-
-def insert_equipment_types() -> bool:
-    """
-    Вставляет дефолтные знаения типов оборудования.
-    :return:
-    """
-    equipments = [
-        EquipmentTypes('TP-Link TL-WR74', 'XXAAAAAXAA'),
-        EquipmentTypes('D-Link DIR-300', 'NXXAAXZXaa'),
-        EquipmentTypes('D-Link DIR-300 S', 'NXXAAXZXXX'),
-    ]
-    for e in equipments:
-        db.session.add(e)
-    try:
-        db.session.commit()
-    except IntegrityError as err:
-        return False
-    return True

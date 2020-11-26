@@ -9,29 +9,19 @@
 ## Запуск
 Первым делом нужно развернуть Docker
 ```bash
-$ docker-compose db up --build
+$ docker-compose up --build -d
 ```
 Следующим шагом установим необходимые пакеты
 ```bash
 $ pip install -r requirements.txt
 ```
-После чего инициализировать базу и добавить 
-соответствующие модели в базу (ну и заполнить  .env)
+Далее нужно закинуть модели в базу
 ```bash
-$ flask db init
-$ flask db migrate
-$ flask db upgrade
+$ python manage.py db init
+$ python manage.py db migrate
+$ python manage.py db upgrade
 ```
 Запустим веб-приложение
 ```bash
 $ python manage.py runserver
 ```
-После запуска приложения нужно добавить дефолтные значения типов оборудования в базу данных,
-для этого нужно перейти на страницу http://127.0.0.1:5000/init. 
-После этого в таблицу типов оборудования добавятся деволтные записи.
-
-| | Тип оборудования | Маска SN |
-| ------------- |:------------------:| -----:|
-| 1 | TP-Link TL-WR74 | XXAAAAAXAA |
-| 2 | D-Link DIR-300 | NXXAAXZXaa |
-| 3 | D-Link DIR-300 S | NXXAAXZXXX |
