@@ -8,7 +8,8 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 
-# # Инициализация расширений
+
+# Инициализация расширений
 db = SQLAlchemy(app)
 db.init_app(app)
 with app.app_context():
@@ -16,6 +17,7 @@ with app.app_context():
     from . import models
     db.create_all()
 migrate = Migrate(app, db)
+
 
 # Импорт вьюх
 from . import views
