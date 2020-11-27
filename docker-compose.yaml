@@ -2,27 +2,27 @@ version: '3.1'
 
 services:
 
-  web:
-    build: .
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-     - 5000:5000
-
   db:
     image: mariadb
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_DATABASE: WebApp
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 3306:3306
     volumes:
-      - ./dbconfig:/docker-entrypoint-initdb.d:ro
-    healthcheck:
-      test: mysqladmin ping -h localhost -p${DB_ROOT_PASSWORD}
-      interval: 1s
-      retries: 20
+      - ./db-entrypoint:/docker-entrypoint-initdb.d:ro
+
+  web:
+    build: ./web
+    env_file:
+      - .env
+    volumes:
+      - ./web:/usr/src/web
+    ports:
+    - 5000:5000
+    depends_on:
+      - db
+
+
+
+

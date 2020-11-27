@@ -1,7 +1,4 @@
-from dotenv import load_dotenv
 from os import getenv
-
-load_dotenv('.env')
 
 
 class BaseConfig(object):
@@ -13,13 +10,10 @@ class BaseConfig(object):
     SECRET_KEY = getenv('SECRET_KEY')
 
     # URI используемая для подключения к базе данных
+    DB_USER = getenv('DB_USER')
+    DB_PASSWORD = getenv('DB_PASSWORD')
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql+mysqlconnector://"
-        f"{getenv('DB_USER')}:"
-        f"{getenv('DB_PASSWORD')}@"
-        f"{getenv('DB_HOST')}/"
-        f"{getenv('DATABASE')}"
-        )
+        f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@db/WebApp")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Словарь соответсвия маски с регулярным выражением
