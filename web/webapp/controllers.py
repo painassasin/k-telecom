@@ -1,5 +1,5 @@
 from webapp.models import EquipmentTypes, Equipments
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, ProgrammingError
 from webapp import app, db
 import re
 
@@ -88,3 +88,10 @@ def insert_equipments(type_code: str, sns: list) -> tuple:
         return False, 'Ошибка на сервере!'
 
     return True, 'Серийные номера успешно добавлены!'
+
+
+def get_equipment_types() -> list:
+    try:
+        return [(t.code, t.type_name) for t in EquipmentTypes.query.all()]
+    except ProgrammingError as err:
+        return []

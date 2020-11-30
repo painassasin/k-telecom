@@ -13,6 +13,7 @@ echo "MySQL started"
 python manage.py db init
 python manage.py db migrate
 python manage.py db upgrade
+python manage.py load_fixture
 
 python manage.py runserver --host 0.0.0.0 --port 5000
 

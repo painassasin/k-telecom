@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import SelectField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 from webapp.models import EquipmentTypes
+from webapp.controllers import get_equipment_types
 
 
 class EquipmentForm(FlaskForm):
@@ -10,7 +11,7 @@ class EquipmentForm(FlaskForm):
         label='Тип оборудования',
         validators=[DataRequired()],
         render_kw={'class': 'form-control'},
-        choices=[(t.code, t.type_name) for t in EquipmentTypes.query.all()],
+        choices=get_equipment_types(),
     )
 
     serial_numbers = TextAreaField(

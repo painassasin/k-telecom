@@ -1,0 +1,19 @@
+[
+  {
+    "table": "equipment_types",
+    "records": [
+      {
+        "type_name": "TP-Link TL-WR74",
+        "sn_mask": "XXAAAAAXAA"
+      },
+      {
+        "type_name": "D-Link DIR-300",
+        "sn_mask": "NXXAAXZXaa"
+      },
+      {
+        "type_name": "D-Link DIR-300 S",
+        "sn_mask": "NXXAAXZXXX"
+      }
+    ]
+  }
+]
