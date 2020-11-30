@@ -1,18 +1,27 @@
+from flask.cli import FlaskGroup
 from webapp import app, db
-from flask_script import Manager
-from flask_migrate import MigrateCommand
-from flask_fixtures.loaders import JSONLoader
-from flask_fixtures import load_fixtures
+from webapp.models import EquipmentTypes
 
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
+cli = FlaskGroup(app)
 
 
-@manager.command
-def load_fixture():
-    fixtures = JSONLoader().load(app.config.get('FIXTURES_PATH'))
-    load_fixtures(db, fixtures)
+@cli.command('create_tables')
+def create_tables():
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+
+@cli.command('create_seed')
+def create_seed():
+
+    db.session.add_all([
+        EquipmentTypes(type_name='TP-Link TL-WR74', sn_mask='XXAAAAAXAA'),
+        EquipmentTypes(type_name='D-Link DIR-300', sn_mask='NXXAAXZXaa'),
+        EquipmentTypes(type_name='D-Link DIR-300 S', sn_mask='NXXAAXZXXX')
+    ])
+    db.session.commit()
 
 
 if __name__ == '__main__':
-    manager.run()
+    cli()
