@@ -13,10 +13,18 @@
 - Docker + docker-compose
 
 ## Инструкция по запуску
-**1. Установка Docker + docker-compose**
+**Установка Docker + docker-compose**
 > [ Инструкция](https://docs.docker.com/engine/install/)
 
-**2. Запуск**
+**Первый запуск**
 ```bash
 $ docker-compose up --build 
+```
+**Последующие запуски**
+```bash
+$ docker-compose up
+```
+**Удаление контейнера и образа**
+```bash
+$ docker-compose down -v --rmi local
 ```

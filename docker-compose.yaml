@@ -1,25 +1,30 @@
-version: '3.1'
+version: '3.7'
 
 services:
   db:
     image: mariadb
-    env_file:
-      - .env.db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
     - mariadb_data:/var/lib/mysql/
+    expose:
+      - "3306"
 
   web:
     build: ./web
     command: python manage.py run -h 0.0.0.0
     env_file:
-      - .env.db
       - .env
     ports:
     - 5000:5000
     volumes:
     - ./web/:/usr/src/app/
     depends_on:
-      - db
+    - db
+
 
 volumes:
   mariadb_data:

@@ -8,7 +8,6 @@ done
 
 echo "MySQL started"
 
-python manage.py create_tables
-python manage.py create_seed
+python manage.py load_fixture
 
 exec "$@"
