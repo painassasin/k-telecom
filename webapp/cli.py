@@ -30,6 +30,6 @@ def register(app):
         try:
             num_rows_deleted = db.session.query(EquipmentTypes).delete()
             db.session.commit()
-        except:
+        except IntegrityError:
             db.session.rollback()
 

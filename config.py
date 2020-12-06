@@ -1,7 +1,5 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 class Config(object):
 
@@ -10,7 +8,7 @@ class Config(object):
     # TODO: Нужно поднимать MySQL (в SQLite кажется не работают ForeignKeys)
     SQLALCHEMY_DATABASE_URI = (
             os.environ.get('DATABASE_URI') or
-            'sqlite:///' + os.path.join(basedir, 'webapp.db'))
+            'mysql+pymysql://web:12345@127.0.0.1/WebApp')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
