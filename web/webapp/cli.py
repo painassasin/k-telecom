@@ -30,6 +30,7 @@ def register(app):
         try:
             num_rows_deleted = db.session.query(EquipmentTypes).delete()
             db.session.commit()
+            print('EquipmentTypes successfully purged')
         except IntegrityError:
             db.session.rollback()
 
