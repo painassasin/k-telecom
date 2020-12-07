@@ -9,4 +9,4 @@ COPY . .
 
 ENV FLASK_APP manage.py
 
-ENTRYPOINT ["sh", "boot.sh"]
+ENTRYPOINT ["bash", "boot.sh"]
