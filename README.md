@@ -11,10 +11,15 @@
 - Python 3.8
 - MariaDB
 - Docker + docker-compose
+- Flask
 
 ## Инструкция по запуску
 **Установка Docker + docker-compose**
 > [ Инструкция](https://docs.docker.com/engine/install/)
+
+**Переменные среды**
+
+>Необходимо задать SECRET_KEY в файле .env
 
 **Сборка контейнеров**
 ```bash
