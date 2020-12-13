@@ -10,8 +10,6 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mariadb_data:/var/lib/mysql/
-    expose:
-      - "3306"
 
   web:
     build: ./web
