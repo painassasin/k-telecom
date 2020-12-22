@@ -1,8 +1,8 @@
-from webapp.main import main_bp
 from webapp.main.forms import EquipmentForm
 from flask import render_template, flash, redirect, url_for
 from webapp.models import EquipmentTypes
 from webapp.controllers import validate_serial_numbers, insert_equipments
+from webapp.main import main_bp
 
 
 @main_bp.route('/', methods=['GET', 'POST'])
@@ -28,5 +28,6 @@ def index():
             flash(f'Такой номер уже существует: {duplicates}', 'danger')
 
     return render_template('index.html',
-                           title='Форма добавления серийных номеров',
+                           title='K-Telecom',
+                           form_title='Форма добавления серийных номеров',
                            form=form)

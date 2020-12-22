@@ -1,35 +1,44 @@
 {% extends 'bootstrap/base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block title %}{{title}}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block styles %}
+	{{ super() }}
+	<link rel="stylesheet"
+	      href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+{% endblock %}
+
 
 {% block content %}
 	<div class="container">
-		<center><h2>{{ title }}</h2></center>
-	</div>
-	<hr>
-	<div class="container">
-		<div class="row align-items-center justify-content-center">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<form action="" method="post" class="form" role="form" novalidate>
-					{{ form.csrf_token() }}
-					<div class="form-group">
-						{{ wtf.form_field(form.equipment_type, class='form-control') }}
-						{{ wtf.form_field(form.serial_numbers, class='form-control') }}
-					</div>
-					{{ wtf.form_field(form.submit, class='btn btn-primary btn-block') }}
-				</form>
-				<hr>
+		<div class="d-flex vh-100">
+			<div class="m-auto w-50">
 				{% with messages = get_flashed_messages(with_categories=true) %}
 					{% if messages %}
 						{% for category, message in messages %}
-							<div class="alert alert-{{category}}" role="alert">{{ message }}</div>
+              <div class="alert alert-{{ category }}" role="alert">
+                <span>{{ message }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 						{% endfor %}
 					{% endif %}
 				{% endwith %}
+				<div class="border border-dark rounded-lg bg-light">
+					<h2 class="text-center text-light p-3 bg-dark">{{ form_title }}</h2>
+					<form action="" method="post" class="m-3" role="form">
+						{{ form.csrf_token() }}
+						<div class="form-group">
+							{{ wtf.form_field(form.equipment_type, class='form-control') }}
+							{{ wtf.form_field(form.serial_numbers, class='form-control') }}
+						</div>
+						{{ wtf.form_field(form.submit, class='btn btn-dark btn-block') }}
+					</form>
+				</div>
 			</div>
-			<div class="col-md-2"></div>
-		</div>
+    </div>
 	</div>
+
 {% endblock %}

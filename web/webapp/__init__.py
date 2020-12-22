@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
-
 db = SQLAlchemy()
 migrate = Migrate()
 bootstrap = Bootstrap()
@@ -19,11 +18,10 @@ def create_app(class_config):
     migrate.init_app(app, db)
     bootstrap.init_app(app)
 
-    from webapp.main import main_bp
-    app.register_blueprint(main_bp)
+    from webapp import main
+    main.register_blueprint(app)
 
     return app
 
-
 # Import models
-from webapp import models
+# from webapp import models
