@@ -9,4 +9,4 @@ while true; do
     sleep 5
 done
 flask fixtures load
-exec gunicorn -b :5000 --access-logfile - --error-logfile - manage:app
+flask run -h 0.0.0.0 -p 5000

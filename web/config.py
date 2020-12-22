@@ -3,12 +3,17 @@ import os
 
 class Config(object):
 
+    # Flask Settings
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
-
+    # Flask-SQLAlchemy settings
+    SQLALCHEMY_DATABASE_URI = ('mysql+mysqlconnector://'
+                               f"{os.environ.get('MYSQL_USER')}:"
+                               f"{os.environ.get('MYSQL_PASSWORD')}@"
+                               f"db/{os.environ.get('MYSQL_DATABASE')}")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Application settings
     RE_DICT = {
         'N': '[0-9]',
         'A': '[A-Z]',
