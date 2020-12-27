@@ -1,49 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="container">
-		<div class="d-flex vh-100">
-			<div class="m-auto w-50">
-				
-				{% with messages = get_flashed_messages(with_categories=true) %}
-					{% if messages %}
-						{% for category, message in messages %}
-							<div class="alert alert-{{ category }}" role="alert">
-								<span>{{ message }}</span>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						{% endfor %}
-					{% endif %}
-				{% endwith %}
-				
-				<div class="border border-dark rounded-lg bg-light">
-					<h2 class="text-center text-light p-3 bg-dark">{{ form_title }}</h2>
-					<form action="" method="post" class="m-3 needs-validation" role="form" novalidate>
-						{{ form.csrf_token() }}
-						<div class="form-group">
-							{{ form.equipment_type.label }}
-							{{ form.equipment_type(class='form-control') }}
+	<div class="container d-flex vh-100">
+		<div class="m-auto w-50">
+			
+			{# Show flashed messages #}
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{ category }}" role="alert">
+							<span>{{ message }}</span>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
 						</div>
-						<div class="form-group">
-							{{ form.serial_numbers.label }}
-							{{ form.serial_numbers(class='form-control') }}
-				
-							{% if form.serial_numbers.errors %}
-								{% for error in form.serial_numbers.errors %}
-									<div class="invalid-feedback" style="display: inline">
-										{{ error }}
-									</div>
-								{% endfor %}
-							{% endif %}
-							
-						</div>
-						{{ form.submit(class='btn btn-dark btn-block') }}
-					</form>
-				</div>
-				
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			
+			{# View form #}
+			<div class="border border-dark rounded-lg bg-light">
+				<h2 class="text-center text-light p-3 bg-dark">{{ form_title }}</h2>
+				<form action="" method="post" class="m-3" role="form" novalidate>
+					{{ form.csrf_token() }}
+					<div class="form-group">
+						{{ form.equipment_type.label }}
+						{{ form.equipment_type(class='custom-select') }}
+					</div>
+					<div class="form-group">
+						{{ form.serial_numbers.label }}
+						{{ form.serial_numbers(class='form-control', rows='5') }}
+			
+						{% if form.serial_numbers.errors %}
+							{% for error in form.serial_numbers.errors %}
+								<div class="invalid-feedback" style="display: inline">
+									{{ error }}
+								</div>
+							{% endfor %}
+						{% endif %}
+						
+					</div>
+					{{ form.submit(class='btn btn-dark btn-block') }}
+				</form>
 			</div>
+			
 		</div>
 	</div>
 
