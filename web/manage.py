@@ -15,3 +15,4 @@ def make_shell_context():
         'Equipments': Equipments
     }
 
+print('abds')

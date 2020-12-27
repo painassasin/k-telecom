@@ -28,7 +28,7 @@ def register(app):
     def remove():
         """Purge equipment types."""
         try:
-            num_rows_deleted = db.session.query(EquipmentTypes).delete()
+            db.session.query(EquipmentTypes).delete()
             db.session.commit()
             print('EquipmentTypes successfully purged')
         except IntegrityError:

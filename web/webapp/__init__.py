@@ -22,6 +22,3 @@ def create_app(class_config):
     main.register_blueprint(app)
 
     return app
-
-# Import models
-# from webapp import models
