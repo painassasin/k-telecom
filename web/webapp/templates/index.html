@@ -23,9 +23,15 @@
 				<h2 class="text-center text-light p-3 bg-dark">{{ form_title }}</h2>
 				<form action="" method="post" class="m-3" role="form" novalidate>
 					{{ form.csrf_token() }}
+					
 					<div class="form-group">
 						{{ form.equipment_type.label }}
-						{{ form.equipment_type(class='custom-select') }}
+						<select class='custom-select' id="equipment_type" name="equipment_type" onchange="changeMask()">
+						{% for ch in form.equipment_type.choices %}
+							<option value="{{ ch[0] }}" name="{{ ch[1]['mask'] }}">{{ ch[1]['name'] }}</option>
+						{% endfor %}
+						</select>
+			      <small id="equipmentMask" class="text-muted"></small>
 					</div>
 					<div class="form-group">
 						{{ form.serial_numbers.label }}

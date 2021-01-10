@@ -8,8 +8,9 @@ from webapp.main import main_bp
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
     form = EquipmentForm()
-    form.equipment_type.choices = [
-        (t.code, t.type_name) for t in EquipmentTypes.query.all()]
+    form.equipment_type.choices = [(t.code,
+                                    dict(name=t.type_name, mask=t.sn_mask)
+                                    ) for t in EquipmentTypes.query.all()]
     if form.validate_on_submit():
         et = form.equipment_type.data
         sn = form.serial_numbers.data
