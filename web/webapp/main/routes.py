@@ -32,3 +32,9 @@ def index():
                            title='K-Telecom',
                            form_title='Форма добавления серийных номеров',
                            form=form)
+
+
+@main_bp.route('/view')
+def view():
+    return render_template('view.html',
+                           title='K-Telecom')
